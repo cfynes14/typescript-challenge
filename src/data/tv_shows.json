@@ -1,0 +1,44 @@
+[
+    {
+      "title": "Breaking Bad",
+      "genre": "Crime",
+      "rating": 9.5,
+      "status": "Completed",
+      "airingDate": "2008-01-20"
+    },
+    {
+      "title": "Game of Thrones",
+      "genre": "Fantasy",
+      "rating": 9.3,
+      "status": "Completed",
+      "airingDate": "2011-04-17"
+    },
+    {
+      "title": "Friends",
+      "genre": "Comedy",
+      "rating": 8.9,
+      "status": "Completed",
+      "airingDate": "1994-09-22"
+    },
+    {
+      "title": "Stranger Things",
+      "genre": "Sci-Fi",
+      "rating": 8.7,
+      "status": "Ongoing",
+      "airingDate": "2016-07-15"
+    },
+    {
+      "title": "The Mandalorian",
+      "genre": "Action",
+      "rating": 8.8,
+      "status": "Ongoing",
+      "airingDate": "2019-11-12"
+    },
+    {
+      "title": "The Office",
+      "genre": "Comedy",
+      "rating": 8.9,
+      "status": "Completed",
+      "airingDate": "2005-03-24"
+    }
+  ]
