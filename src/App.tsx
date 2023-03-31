@@ -15,14 +15,25 @@ import { Show } from './models/Show';
 import { loadShows } from './utils/loadShows';
 import DeleteIcon from '@mui/icons-material/Delete';
 import data from './data/tv_shows.json';
+import { filterShowsByGenre } from './utils/filterByGenre';
 
 const App = () => {
-  const [shows, setShows] = useState<Show[]>();
+  const [shows, setShows] = useState<Show[] | undefined>();
+  const [filteredShows, setFilteredShows] = useState<Show[] | undefined>();
 
   useEffect(() => {
     const shows = loadShows(data);
     setShows(shows);
   }, []);
+
+  const handleSetGenre = (genre: string) => {
+    if(shows) {
+      const array: Show[] = filterShowsByGenre(shows, genre);
+      setFilteredShows(array);
+    }
+  }
+
+  const renderedShows = filteredShows || shows;
 
   return (
     <div className="App">
@@ -59,8 +70,16 @@ const App = () => {
           <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
             Shows
           </Typography>
+          <div>
+            <h2>Filter by genre</h2>
+            {shows?.map(({genre}) => (
+              <div onClick={() => handleSetGenre(genre)} style={{
+                cursor: "pointer"
+              }}>{genre}</div>
+            ))}
+          </div>
           <List dense={true}>
-            {shows?.map(item => {
+            {renderedShows?.map(item => {
               return (
                 <ListItem
                   secondaryAction={
