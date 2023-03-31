@@ -9,7 +9,8 @@ import {
   List,
   ListItem,
   IconButton,
-  Box
+  Box,
+  Stack
 } from '@mui/material';
 import { Show } from './models/Show';
 import { loadShows } from './utils/loadShows';
@@ -87,10 +88,20 @@ const App = () => {
                       <DeleteIcon />
                     </IconButton>
                   }
-                  sx={{ width: 300 }}
+                  sx={{ mb: 2 }}
                   key={item.title}
                 >
-                  <div>{item.title}</div>
+                  <Stack spacing={2} direction={'row'}>
+                    <div>{item.title}</div>
+                    {item.genre && <div>{`Genre: ${item.genre}`}</div>}
+                    {item.rating && <div>{`Rating: ${item.rating}`}</div>}
+                    {item.status && <div>{`Status: ${item.status}`}</div>}
+                    {item.airingDate && (
+                      <div>{`Airing Date: ${item.airingDate}`}</div>
+                    )}
+                    {item.network && <div>{`Rating: ${item.network}`}</div>}
+                    {item.year && <div>{`Year: ${item.year}`}</div>}
+                  </Stack>
                 </ListItem>
               );
             })}
