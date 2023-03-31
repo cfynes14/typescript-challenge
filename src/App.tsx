@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import {
-  Button,
   Autocomplete,
   TextField,
   Grid,
@@ -36,6 +35,10 @@ const App = () => {
 
   const renderedShows = filteredShows || shows;
 
+  const handleRemoveShow = (title: string) => {
+    setShows(shows?.filter(show => show.title !== title))
+  }
+
   return (
     <div className="App">
       <Typography sx={{ mt: 4, mb: 2, height: 200 }} variant="h3">
@@ -52,7 +55,7 @@ const App = () => {
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          options={['test1, test2, test3']}
+          options={shows?.map(show => show.title) || []}
           sx={{ width: 300, height: 200 }}
           renderInput={params => <TextField {...params} label="Show" />}
         />
@@ -84,7 +87,7 @@ const App = () => {
               return (
                 <ListItem
                   secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
+                    <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveShow(item.title)}>
                       <DeleteIcon />
                     </IconButton>
                   }
@@ -107,8 +110,6 @@ const App = () => {
             })}
           </List>
         </Grid>
-
-        <Button variant="contained">Add Show</Button>
       </Box>
     </div>
   );
