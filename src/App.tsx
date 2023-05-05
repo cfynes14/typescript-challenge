@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import {
   Autocomplete,
+  Button,
   TextField,
   Grid,
   Typography,
@@ -12,7 +13,7 @@ import {
   Stack
 } from '@mui/material';
 import { Show } from './models/Show';
-import { loadShows } from './utils/loadShows';
+import { loadShows, ValidateSortingKeys } from './utils/loadShows';
 import DeleteIcon from '@mui/icons-material/Delete';
 import data from './data/tv_shows.json';
 import { filterShowsByGenre } from './utils/filterByGenre';
@@ -20,11 +21,16 @@ import { filterShowsByGenre } from './utils/filterByGenre';
 const App = () => {
   const [shows, setShows] = useState<Show[] | undefined>();
   const [filteredShows, setFilteredShows] = useState<Show[] | undefined>();
+  const [option, setOption] = useState<string>();
+  const [order, setOrder] = useState<string>()
 
   useEffect(() => {
     const shows = loadShows(data);
     setShows(shows);
   }, []);
+
+
+
 
   const handleSetGenre = (genre: string) => {
     if(shows) {
@@ -33,7 +39,15 @@ const App = () => {
     }
   }
 
+  const handleSortShows = (e: React.MouseEvent) => {
+    // loadShows(data, sortOption)
+    e.preventDefault()
+
+  }
+
   const renderedShows = filteredShows || shows;
+
+  const sortOptions: ValidateSortingKeys[] = ["rating", "airingDate"] 
 
   const handleRemoveShow = (title: string) => {
     setShows(shows?.filter(show => show.title !== title))
@@ -56,10 +70,29 @@ const App = () => {
           disablePortal
           id="combo-box-demo"
           options={shows?.map(show => show.title) || []}
-          sx={{ width: 300, height: 200 }}
+          sx={{ width: 300, height: 80 }}
           renderInput={params => <TextField {...params} label="Show" />}
         />
-
+        <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+          Sort
+        </Typography>
+        <Stack direction={({ sm: "row" })}>
+        <Autocomplete
+          disablePortal
+          id="sort-option"
+          options={sortOptions.map(option => option) || []}
+          sx={{ width: 150, height: 80, marginRight: 5 }}
+          renderInput={params => <TextField {...params} label="Option" />}
+        />
+          <Autocomplete
+          disablePortal
+          id="sort-order"
+          options={["ascending", "descending"] || []}
+          sx={{ width: 150, height: 80 }}
+          renderInput={params => <TextField {...params} label="Order" />}
+        />
+        </Stack>
+        <Button onClick={(e: React.MouseEvent) => handleSortShows(e)}>Sort</Button>
         <Grid
           item
           xs={12}
